@@ -16,33 +16,64 @@ class NavBar extends Component {
     super(props);
     this.state = {
       "open": false,
-      "show": null
+      "show": null,
+      pos: 1,
     };
     this.handleToggle = this.handleToggle.bind(this);
     this.Page1 = this.Page1.bind(this);
     this.Page2 = this.Page2.bind(this);
     this.Page3 = this.Page3.bind(this);
     this.Home1 = this.Home1.bind(this);
+    this.shipdata = this.shipdata.bind(this);
+    this.click1 = this.click1.bind(this);
+    this.click2 = this.click2.bind(this);
+    this.click3 = this.click3.bind(this);
+    this.click4 = this.click4.bind(this);
   }
+
+  shipdata(){
+    this.props.onUpdate(this.state.pos);
+    debugger;
+  }
+
+  /*componentDidUpdate() {
+    this.props.onUpdate(this.state.pos);
+  */
 
   handleToggle () {
     this.setState({ open: !this.state.open });
       };
 
-  Home1 (){
-    this.setState({ show: 'Home1', open: false});
+  Home1 () {
+    this.setState({ show: 'Home1', open: false , pos: 1});
   }
 
   Page1 () {
-    this.setState({ show: 'Page1', open: false });
+    this.setState({ show: 'Page1', open: false , pos: 2});
   };
 
   Page2 () {
-    this.setState({ show: 'Page2', open: false });
+    this.setState({ show: 'Page2', open: false , pos: 3});
   };
-  Page3 (){
-    this.setState({ show: 'Page3', open: false});
+  Page3 () {
+    this.setState({ show: 'Page3', open: false , pos: 4});
   };
+  click1 () {
+    this.Home1();
+   this.shipdata();
+  }
+  click2 () {
+    this.Page1();
+   this.shipdata();
+  }
+  click3 () {
+    this.Page2();
+    this.shipdata();
+  }
+  click4 () {
+    this.Page3();
+    this.shipdata();
+  }
 
   render() {
 
@@ -74,6 +105,12 @@ class NavBar extends Component {
         content = (<Home/>);
         title = "Sea Turtle";
     }
+  //  let imgUrl = 'http://www.smallfish-design.com/graphics/fish_school.gif',
+    const styles = {
+    container: {
+      marginTop:'5px',
+      }
+    }
 
     return (
       <div className="App">
@@ -88,19 +125,21 @@ class NavBar extends Component {
           open={this.state.open}
           onRequestChange={(open) => this.setState({ open })}>
 
-          <AppBar title="AppBar" />
+          <AppBar title="Turtles" />
 
-          <MenuItem  onClick={this.Home1}>Home</MenuItem>
-          <MenuItem  onClick={this.Page1}>Why Are They Endangered</MenuItem>
-          <MenuItem  onClick={this.Page2}>Sea Turtle Now</MenuItem>
-          <MenuItem  onClick={this.Page3}>How You Can Help</MenuItem>
+          <MenuItem  onClick={this.click1}>Home</MenuItem>
+          <MenuItem  onClick={this.click2}>Why Are They Endangered</MenuItem>
+          <MenuItem  onClick={this.click3}>Sea Turtle Now</MenuItem>
+          <MenuItem  onClick={this.click4}>How You Can Help</MenuItem>
         </Drawer>
-        <Paper zDepth={5}>
+        <div style={styles.container}>
+        <Paper>
            <Toolbar>
                <ToolbarTitle text ={ title }/>
            </Toolbar>
            {content}
         </Paper>
+        </div>
       </div>
     );
   }
